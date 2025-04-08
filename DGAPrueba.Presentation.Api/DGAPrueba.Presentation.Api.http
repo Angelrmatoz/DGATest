@@ -1,0 +1,6 @@
+@DGAPrueba.Presentation.Api_HostAddress = http://localhost:5219
+
+GET {{DGAPrueba.Presentation.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
