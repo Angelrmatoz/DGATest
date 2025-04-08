@@ -6,4 +6,9 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\DGAPrueba.Core.Application\DGAPrueba.Core.Application.csproj" />
+      <ProjectReference Include="..\DGAPrueba.Core.Domain\DGAPrueba.Core.Domain.csproj" />
+    </ItemGroup>
+
 </Project>
