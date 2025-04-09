@@ -1,4 +1,6 @@
-﻿using DGAPrueba.Infrastructure.Persistence.Context;
+﻿using DGAPrueba.Core.Application.Interfaces.Repositories;
+using DGAPrueba.Infrastructure.Persistence.Context;
+using DGAPrueba.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +15,15 @@ public static class ServiceRegistration
         #region Context
             services.AddDbContext<DGAContext>(op => op.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
                 m => m.MigrationsAssembly(typeof(DGAContext).Assembly.FullName)));
+        #endregion
+        
+        // Repositories
+
+        #region Repositories
+            services.AddTransient<IClientRepository, ClientRepository>();   
+            services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<ISalesProductRepository, SalesProductRepository>();
+            services.AddTransient<ISaleRepository, SalesRepository>();
         #endregion
     }
 }
