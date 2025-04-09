@@ -1,0 +1,9 @@
+﻿namespace DGAPrueba.Core.Application.DTOS.Client;
+
+public class SaveSaleProductDTO
+{
+    public int SalesId { get; set; }
+    public int ProductId { get; set; }
+    public int Quantity { get; set; }
+
+}
