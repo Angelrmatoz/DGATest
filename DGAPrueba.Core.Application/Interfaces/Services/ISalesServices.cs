@@ -1,7 +1,8 @@
-﻿using DGAPrueba.Core.Domain.Entites;
+﻿using DGAPrueba.Core.Application.DTOS.Client;
+using DGAPrueba.Core.Domain.Entites;
 
 namespace DGAPrueba.Core.Application.Interfaces.Services;
 
-public interface ISalesServices : IBaseService<Sales>
+public interface ISalesServices : IBaseService<SalesDTO, Sales>
 {
 }
