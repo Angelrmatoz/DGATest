@@ -19,13 +19,9 @@ Este proyecto sigue la arquitectura Onion Architecture y está organizado en mú
 Este proyecto contiene las interfaces, servicios, maps, dtos y lógica de negocio principal de la aplicación.
 
 Dependencias:
-- RealEstateApp.Core.Domain
-- Microsoft.EntityFrameworkCore
+- DGAPrueba.Core.Domain
 - AutoMapper
-- Microsoft.AspNetCore.Http
-- Microsoft.AspNetCore.Http.Abstractions
-- Microsoft.AspNetCore.Http.Extensions
-- Microsoft.Extensions.Options.ConfigurationExtensions
+- Microsoft.Extensions.DependencyInjection
 
 ### RealEstateApp.Core.Domain
 Este proyecto contiene las entidades y settins de la app.
@@ -36,8 +32,8 @@ Dependencias:
 
 Este proyecto contiene la configuracion del contexto de la base de datos y migrations y repositorios
 
-- RealEstateApp.Core.Application
-- RealEstateApp.Core.Domain
+- DGAPrueba.Core.Application
+- DGAPrueba.Core.Domain
 - Microsoft.EntityFrameworkCore
 - Microsoft.EntityFrameworkCore.Design
 - Microsoft.EntityFrameworkCore.SqlServer
@@ -50,9 +46,13 @@ Este proyecto contiene la configuracion del contexto de la base de datos y migra
 Este proyecto contiene la API RESTful de la aplicación.
 
 Dependencias:
-- RealEstateApp.Core
-- RealEstateApp.Infrastructure
+- Microsoft.AspNetCore.OpenApi
+- Microsoft.EntityFrameworkCore.Tools
+- Microsoft.VisualStudio.Web.CodeGeneration.Design
 - Swashbuckle.AspNetCore
+- DGAPrueba.Core.Application
+- DGAPrueba.Core.Domain
+- DGAPrueba.Infrastructure.Persistence
 
 ## Requisitos
 
