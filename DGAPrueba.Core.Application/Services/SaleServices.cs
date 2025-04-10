@@ -10,14 +10,16 @@ public class SaleServices : BaseServices<SalesDTO, Sales>, ISalesServices
 {
     private readonly ISaleRepository _salesRepository;
     private readonly ISaleProductServices _saleProductServices;
+    private readonly IProductRepository _productRepository;
 
 private readonly IMapper _mapper;
 
-    public SaleServices(ISaleRepository salesRepository, IMapper mapper, ISaleProductServices saleProductServices) : base(salesRepository, mapper)
+    public SaleServices(ISaleRepository salesRepository, IMapper mapper, ISaleProductServices saleProductServices, IProductRepository productRepository) : base(salesRepository, mapper)
     {
         _salesRepository = salesRepository;
         _mapper = mapper;
         _saleProductServices = saleProductServices;
+        _productRepository = productRepository;
     }
 
     public  override async Task<Sales> SaveAsync(SalesDTO saveSalesDTO)
@@ -48,7 +50,28 @@ private readonly IMapper _mapper;
             
             // Guardar el producto de la venta
             await _saleProductServices.SaveAsync(saleProductDTO);
+            await updateProductStock(saleProduct.ProductId, saleProduct.Quantity);
         }
+        
         return entitySave;
+    }
+    
+    public async Task updateProductStock(int id, int quantity)
+    {
+        // Obtener el producto por id
+        var product = await _productRepository.GetByIdAsync(id);
+        
+        // Verificar si el producto existe
+        if (product == null)
+        {
+            throw new Exception($"No se encontro el producto con id {id}");
+        }
+        
+        // Actualizar el stock del producto
+        // restando la cantidad vendida
+        product.Stock -= quantity;
+        
+        // Guardar el producto actualizado
+        var updatedProduct = await _productRepository.UpdateAsync(product, id);
     }
 }
