@@ -15,7 +15,7 @@ public class DGAContext : DbContext
     public DbSet<Product> Products { get; set; }
     public DbSet<Client> Clients { get; set; }
     public DbSet<Sales> Sales { get; set; }
-    public DbSet<SaleProduct> SaleProducts { get; set; }
+    public DbSet<SaleProduct> SaleProduct { get; set; }
     
     //configuracion de la base de datos
 
@@ -27,7 +27,7 @@ public class DGAContext : DbContext
         modelBuilder.Entity<Product>().ToTable("Products");
         modelBuilder.Entity<Client>().ToTable("Clients");
         modelBuilder.Entity<Sales>().ToTable("Sales");
-        modelBuilder.Entity<SaleProduct>().ToTable("SaleProducts");
+        modelBuilder.Entity<SaleProduct>().ToTable("SaleProduct");
         #endregion
 
         #region PK
