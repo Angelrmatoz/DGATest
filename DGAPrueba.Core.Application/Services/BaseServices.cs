@@ -17,7 +17,7 @@ public class BaseServices<SaveDTO, Entity> : IBaseService<SaveDTO, Entity>
     }
 
     // Este metodo es para guardar un objeto en la base de datos
-    public async Task<Entity> SaveAsync(SaveDTO vm)
+    public virtual async Task<Entity> SaveAsync(SaveDTO vm)
     {
         
         // guardar el objeto en la base de datos
