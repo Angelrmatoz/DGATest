@@ -82,6 +82,9 @@ namespace DGAPrueba.Infrastructure.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
@@ -97,7 +100,7 @@ namespace DGAPrueba.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("SalesId");
 
-                    b.ToTable("SaleProduct");
+                    b.ToTable("SaleProduct", (string)null);
                 });
 
             modelBuilder.Entity("DGAPrueba.Core.Domain.Entites.Sales", b =>
