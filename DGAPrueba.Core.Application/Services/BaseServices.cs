@@ -19,15 +19,35 @@ public class BaseServices<SaveDTO, Entity> : IBaseService<SaveDTO, Entity>
     // Este metodo es para guardar un objeto en la base de datos
     public async Task<Entity> SaveAsync(SaveDTO vm)
     {
+        
+        // guardar el objeto en la base de datos
         Entity entity = await _repository.SaveAsync(_mapper.Map<Entity>(vm));
+        // si no se guarda el objeto
+        // lanzar una excepcion
+        if (entity == null)
+        {
+            throw new Exception($"No se pudo guardar el registro");
+        }
         return entity;
     }
 
     // Este metodo es para actualizar un objeto en la base de datos
-    public async Task<Entity> UpdateAsync(SaveDTO entity)
+    public async Task<Entity> UpdateAsync(SaveDTO entity, int id)
     {
-        await _repository.UpdateAsync(_mapper.Map<Entity>(entity));
-        return _mapper.Map<Entity>(entity);
+        // mapear el objeto a la entidad
+        var entityUpdate = _mapper.Map<Entity>(entity);
+        
+        // buscar el objeto en la base de datos 
+        // y actualizarlo
+        Entity T = await _repository.UpdateAsync(entityUpdate, id);
+        
+        // si no se encuentra el objeto
+        // lanzar una excepcion
+        if (T == null)
+        {
+            throw new Exception($"No se encontro el registro con id {id}");
+        }
+        return _mapper.Map<Entity>(T);
     }
 // Este metodo es para eliminar un objeto en la base de datos
     public async Task<bool> DeleteAsync(int id)

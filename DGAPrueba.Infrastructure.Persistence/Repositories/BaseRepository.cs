@@ -56,9 +56,9 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
     }
 
     //Metodo para actualizar un registro en la base de datos
-    public async Task<T> UpdateAsync(T entity)
+    public async Task<T> UpdateAsync(T entity, int id)
     {
-        T entry = await _dgaContext.Set<T>().FindAsync(entity);
+        T entry = await _dgaContext.Set<T>().FindAsync(id);
         _dgaContext.Entry(entry).CurrentValues.SetValues(entity);
         await _dgaContext.SaveChangesAsync();
         return entity;
