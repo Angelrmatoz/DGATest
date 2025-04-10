@@ -10,5 +10,6 @@ public class Client : BaseEntity
     public string Phone { get; set; }
 
     // Navegación: Un cliente puede tener múltiples ventas
+    [System.Text.Json.Serialization.JsonIgnore]
     public List<Sales> Sales { get; set; }
 }

@@ -10,8 +10,10 @@ public class Sales : BaseEntity
 
     // Clave foránea y navegación a Client
     public int ClientId { get; set; }
+    [System.Text.Json.Serialization.JsonIgnore]
     public Client Client { get; set; }
 
     // Navegación para relación muchos-a-muchos con Product
+    [System.Text.Json.Serialization.JsonIgnore]
     public List<SaleProduct> SaleProducts { get; set; }
 }

@@ -9,9 +9,11 @@ public class SaleProduct : BaseEntity
     
     //relacion de ventas
     public int SalesId { get; set; }
-    public Sales Sales { get; set; }
+    [System.Text.Json.Serialization.JsonIgnore]
+    public Sales Sales { get; set; }    
     
     //relacion de productos
     public int ProductId { get; set; }
+    [System.Text.Json.Serialization.JsonIgnore]
     public Product Product { get; set; }
 }

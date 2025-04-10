@@ -11,5 +11,6 @@ public class Product : BaseEntity
     public int Stock { get; set; }
 
     // Navegación: Un producto puede estar en múltiples ventas (relación muchos-a-muchos)
+    [System.Text.Json.Serialization.JsonIgnore]
     public List<SaleProduct> SaleProducts { get; set; } = new List<SaleProduct>();
 }
