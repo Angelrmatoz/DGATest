@@ -2,6 +2,7 @@
 
 public class SalesDTO
 {
+    public int Id { get; set; }
     public DateOnly Date { get; set; }
     public double Total { get; set; }
     public int ClientId { get; set; }
