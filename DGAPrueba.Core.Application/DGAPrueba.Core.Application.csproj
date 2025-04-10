@@ -16,7 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="DTOS\Client\" />
+      <Folder Include="Helper\" />
     </ItemGroup>
 
 </Project>
