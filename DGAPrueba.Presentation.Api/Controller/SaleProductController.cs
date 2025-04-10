@@ -20,60 +20,96 @@ public class SaleProductController : ControllerBase
     // GET
     public async Task<IActionResult> GetAll()
     {
-        var result = await _saleProductServices.GetAllAsync();
-        if(result == null)
+        try
         {
-            return BadRequest("No encontrado");
+            var result = await _saleProductServices.GetAllAsync();
+            if(result == null)
+            {
+                return BadRequest("No encontrado");
+            }
+            return Ok(result);
         }
-        return Ok(result);
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+        
     }
 
     [HttpGet("GetById")]
     // GET
     public async Task<IActionResult> GetById(int id)
     {
-        var result = await _saleProductServices.GetByIdAsync(id);
-        if(result == null)
+        try
         {
-            return BadRequest("No encontrado");
+            var result = await _saleProductServices.GetByIdAsync(id);
+            if(result == null)
+            {
+                return BadRequest("No encontrado");
+            }
+            return Ok(result);
         }
-        return Ok(result);
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+        
     }
     
     [HttpPost("Save")]
     // POST
     public async Task<IActionResult> Save([FromBody] SaveSaleProductDTO saleProduct)
     {
-        
-        var result = await _saleProductServices.SaveAsync(saleProduct);
-        if(result == null)
+        try
         {
-            return BadRequest("No encontrado");
+            var result = await _saleProductServices.SaveAsync(saleProduct);
+            if(result == null)
+            {
+                return BadRequest("No encontrado");
+            }
+            return Ok(result);
         }
-        return Ok(result);
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
     
     // PUT
     [HttpPut("Update")]
     public async Task<IActionResult> Update([FromBody] SaveSaleProductDTO saleProduct)
     {
-        var result = await _saleProductServices.UpdateAsync(saleProduct, saleProduct.Id);
-        if(result == null)
+        try
         {
-            return BadRequest("No encontrado");
+            var result = await _saleProductServices.UpdateAsync(saleProduct, saleProduct.Id);
+            if(result == null)
+            {
+                return BadRequest("No encontrado");
+            }
+            return Ok(result);
         }
-        return Ok(result);
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
     
     // DELETE
     [HttpDelete("Delete")]
     public async Task<IActionResult> Delete(int id)
     {
-        var result = await _saleProductServices.DeleteAsync(id);
-        if(result == null)
+        try
         {
-            return BadRequest("No encontrado");
+            var result = await _saleProductServices.DeleteAsync(id);
+            if(result == null)
+            {
+                return BadRequest("No encontrado");
+            }
+            return Ok(result);
         }
-        return Ok(result);
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
 }

@@ -19,61 +19,98 @@ public class ClientController : ControllerBase
     // GET
     public async Task<IActionResult> GetAll()
     {
-        var result = await _clientService.GetAllAsync();
-        if(result == null)
+        try
         {
-            return BadRequest("No encontrado");
+            // Get all clients
+            var result = await _clientService.GetAllAsync();
+            if(result == null)
+            {
+                return BadRequest("No encontrado");
+            }
+            return Ok(result);
         }
-        return Ok(result);
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+       
     }
 
     [HttpGet("GetById")]
     // GET
     public async Task<IActionResult> GetById(int id)
     {
-        var result = await _clientService.GetByIdAsync(id);
-        if(result == null)
+        try
         {
-            return BadRequest("No encontrado");
+            // Get client by id
+            var result = await _clientService.GetByIdAsync(id);
+            if(result == null)
+            {
+                return BadRequest("No encontrado");
+            }
+            return Ok(result);
         }
-        return Ok(result);
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
     
     [HttpPost("Save")]
     // POST
     public async Task<IActionResult> Save([FromBody] SaveClientDTO client)
     {
-        
-        var result = await _clientService.SaveAsync(client);
-        if(result == null)
+        try
         {
-            return BadRequest("No encontrado");
+            var result = await _clientService.SaveAsync(client);
+            if(result == null)
+            {
+                return BadRequest("No encontrado");
+            }
+            return Ok(result);
         }
-        return Ok(result);
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }  
     }
     
     // PUT
     [HttpPut("Update")]
     public async Task<IActionResult> Update([FromBody] SaveClientDTO client)
     {
-        var result = await _clientService.UpdateAsync(client, client.Id);
-        if(result == null)
+        try
         {
-            return BadRequest("No encontrado");
+            var result = await _clientService.UpdateAsync(client, client.Id);
+            if(result == null)
+            {
+                return BadRequest("No encontrado");
+            }
+            return Ok(result);
         }
-        return Ok(result);
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
     
     // DELETE
     [HttpDelete("Delete")]
     public async Task<IActionResult> Delete(int id)
     {
-        var result = await _clientService.DeleteAsync(id);
-        if(result == null)
+        try
         {
-            return BadRequest("No encontrado");
+            var result = await _clientService.DeleteAsync(id);
+            if(result == null)
+            {
+                return BadRequest("No encontrado");
+            }
+            return Ok(result);
         }
-        return Ok(result);
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
     
 }
