@@ -23,8 +23,7 @@ public class GeneralProfile : Profile
         #region Sales
         CreateMap<Sales, SalesDTO>()
             .ReverseMap()
-            .ForMember(x => x.Client, opt => opt.Ignore())
-            .ForMember(x => x.SaleProducts, opt => opt.Ignore());
+            .ForMember(x => x.Client, opt => opt.Ignore());
         #endregion
 
         #region SaleProduct
