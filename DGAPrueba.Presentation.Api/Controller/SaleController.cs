@@ -15,6 +15,9 @@ public class SaleController : ControllerBase
     }
     
     [HttpGet("GetAll")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     // GET
     public async Task<IActionResult> GetAll()
     {
@@ -23,18 +26,21 @@ public class SaleController : ControllerBase
             var result = await _salesServices.GetAllAsync();
             if(result == null)
             {
-                return BadRequest("No encontrado");
+                return NotFound("No encontrado");
             }
             return Ok(result);
         }
         catch (Exception e)
         {
-            return BadRequest(e.Message);
+            return StatusCode(500, $"Error interno del servidor: {e.Message}");
         }
         
     }
 
     [HttpGet("GetById")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     // GET
     public async Task<IActionResult> GetById(int id)
     {
@@ -43,59 +49,80 @@ public class SaleController : ControllerBase
             var result = await _salesServices.GetByIdAsync(id);
             if(result == null)
             {
-                return BadRequest("No encontrado");
+                return NotFound("No encontrado");
             }
             return Ok(result);
         }
         catch (Exception e)
         {
-            return BadRequest(e.Message);
+            return StatusCode(500, $"Error interno del servidor: {e.Message}");
         }
         
     }
     
     [HttpPost("Save")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     // POST
     public async Task<IActionResult> Save([FromBody] SalesDTO sales)
     {
         try
         {
+            // validar el modelo
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             var result = await _salesServices.SaveAsync(sales);
             if(result == null)
             {
-                return BadRequest("No encontrado");
+                return NotFound("No encontrado");
             }
             return Ok(result);
         }
         catch (Exception e)
         {
-            return BadRequest(e.Message);
+            return StatusCode(500, $"Error interno del servidor: {e.Message}");
         }
         
     }
     
     // PUT
     [HttpPut("Update")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Update([FromBody] SalesDTO sales)
     {
         try
         {
+            // validar el modelo
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             var result = await _salesServices.UpdateAsync(sales, sales.Id);
             if(result == null)
             {
-                return BadRequest("No encontrado");
+                return NotFound("No encontrado");
             }
             return Ok(result);
         }
         catch (Exception e)
         {
-            return BadRequest(e.Message);
+            return StatusCode(500, $"Error interno del servidor: {e.Message}");
         }
         
     }
     
     // DELETE
     [HttpDelete("Delete")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Delete(int id)
     {
         try
@@ -103,13 +130,13 @@ public class SaleController : ControllerBase
             var result = await _salesServices.DeleteAsync(id);
             if(result == null)
             {
-                return BadRequest("No encontrado");
+                return NotFound("No encontrado");
             }
-            return Ok(result);
+            return NoContent();
         }
         catch (Exception e)
         {
-            return BadRequest(e.Message);
+            return StatusCode(500, $"Error interno del servidor: {e.Message}");
         }
         
     }

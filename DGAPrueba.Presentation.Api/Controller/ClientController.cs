@@ -17,6 +17,9 @@ public class ClientController : ControllerBase
 
     [HttpGet("GetAll")]
     // GET
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetAll()
     {
         try
@@ -25,18 +28,22 @@ public class ClientController : ControllerBase
             var result = await _clientService.GetAllAsync();
             if(result == null)
             {
-                return BadRequest("No encontrado");
+                return NotFound("No encontrado");
             }
             return Ok(result);
         }
         catch (Exception e)
         {
-            return BadRequest(e.Message);
+            return StatusCode(500, $"Error interno del servidor: {e.Message}");
         }
        
     }
 
     [HttpGet("GetById")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    
     // GET
     public async Task<IActionResult> GetById(int id)
     {
@@ -46,37 +53,49 @@ public class ClientController : ControllerBase
             var result = await _clientService.GetByIdAsync(id);
             if(result == null)
             {
-                return BadRequest("No encontrado");
+                return NotFound("No encontrado");
             }
             return Ok(result);
         }
-        catch (Exception e)
+        catch (Exception e) 
         {
-            return BadRequest(e.Message);
+            return StatusCode(500, $"Error interno del servidor: {e.Message}");
         }
     }
     
     [HttpPost("Save")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     // POST
     public async Task<IActionResult> Save([FromBody] SaveClientDTO client)
     {
         try
         {
-            var result = await _clientService.SaveAsync(client);
-            if(result == null)
+            // Validate the model state
+            if (ModelState.IsValid)
             {
-                return BadRequest("No encontrado");
+                return BadRequest();
+            }
+            var result = await _clientService.SaveAsync(client);
+            // Check if the result is null
+            if(result.Id == 0)
+            {
+                return NotFound("No encontrado");
             }
             return Ok(result);
         }
         catch (Exception e)
         {
-            return BadRequest(e.Message);
+            return StatusCode(500, $"Error interno del servidor: {e.Message}");
         }  
     }
     
     // PUT
     [HttpPut("Update")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Update([FromBody] SaveClientDTO client)
     {
         try
@@ -84,18 +103,21 @@ public class ClientController : ControllerBase
             var result = await _clientService.UpdateAsync(client, client.Id);
             if(result == null)
             {
-                return BadRequest("No encontrado");
+                return NotFound("No encontrado");
             }
             return Ok(result);
         }
         catch (Exception e)
         {
-            return BadRequest(e.Message);
+            return StatusCode(500, $"Error interno del servidor: {e.Message}");
         }
     }
     
     // DELETE
     [HttpDelete("Delete")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Delete(int id)
     {
         try
@@ -103,13 +125,14 @@ public class ClientController : ControllerBase
             var result = await _clientService.DeleteAsync(id);
             if(result == null)
             {
-                return BadRequest("No encontrado");
+                return NotFound("No encontrado");
             }
-            return Ok(result);
+
+            return NoContent();
         }
         catch (Exception e)
         {
-            return BadRequest(e.Message);
+            return StatusCode(500, $"Error interno del servidor: {e.Message}");
         }
     }
     
