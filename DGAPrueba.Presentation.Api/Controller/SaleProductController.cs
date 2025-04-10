@@ -57,7 +57,7 @@ public class SaleProductController : ControllerBase
     [HttpPut("Update")]
     public async Task<IActionResult> Update([FromBody] SaveSaleProductDTO saleProduct)
     {
-        var result = await _saleProductServices.UpdateAsync(saleProduct);
+        var result = await _saleProductServices.UpdateAsync(saleProduct, saleProduct.Id);
         if(result == null)
         {
             return BadRequest("No encontrado");

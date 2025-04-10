@@ -56,7 +56,7 @@ public class ClientController : ControllerBase
     [HttpPut("Update")]
     public async Task<IActionResult> Update([FromBody] SaveClientDTO client)
     {
-        var result = await _clientService.UpdateAsync(client);
+        var result = await _clientService.UpdateAsync(client, client.Id);
         if(result == null)
         {
             return BadRequest("No encontrado");
