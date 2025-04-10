@@ -7,6 +7,6 @@ public interface IBaseRepository<T>
     Task<List<T>> GetAllWithIncludeAsync(List<string> includes);
     Task<T> GetByIdAsync(int id);
     Task<T> SaveAsync(T entity);
-    Task<T> UpdateAsync(T entity);
+    Task<T> UpdateAsync(T entity, int id);
     Task<bool> DeleteAsync(int id);
 }

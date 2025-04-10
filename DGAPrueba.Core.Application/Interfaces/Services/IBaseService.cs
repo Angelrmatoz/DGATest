@@ -6,7 +6,7 @@ public interface IBaseService<DTO, Entity>
 {
     //Servicio generico
     Task<Entity> SaveAsync(DTO entity);
-    Task<Entity> UpdateAsync(DTO entity);
+    Task<Entity> UpdateAsync(DTO entity, int id);
     Task<bool> DeleteAsync(int id);
     Task<Entity> GetByIdAsync(int id);
     Task<List<Entity>> GetAllAsync();
