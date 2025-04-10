@@ -42,7 +42,8 @@ private readonly IMapper _mapper;
             {
                 ProductId = saleProduct.ProductId,
                 SalesId = entitySave.Id,
-                Quantity = saleProduct.Quantity
+                Quantity = saleProduct.Quantity,
+                Price = saleProduct.Price,
             };
             
             // Guardar el producto de la venta
