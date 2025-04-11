@@ -1,5 +1,7 @@
 using DGAPrueba.Core.Application;
 using DGAPrueba.Infrastructure.Persistence;
+using sDGAPrueba.Infrastructure.Identity;
+
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +16,9 @@ builder.Services.AddPersistenceLayer(builder.Configuration);
 
 //Application Layer
 builder.Services.AddApplicationLayer();
+
+//Identity Layer
+builder.Services.AddIdentityInfrastructure(builder.Configuration);
 
 builder.Services.AddControllers();
 
