@@ -7,13 +7,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.14" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.14">
+      <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.15" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.15" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.15">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
-      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.14" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.14">
+      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.15" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.15">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
@@ -24,6 +25,7 @@
     <ItemGroup>
       <ProjectReference Include="..\DGAPrueba.Core.Application\DGAPrueba.Core.Application.csproj" />
       <ProjectReference Include="..\DGAPrueba.Core.Domain\DGAPrueba.Core.Domain.csproj" />
+      <ProjectReference Include="..\sDGAPrueba.Infrastructure.Identity\sDGAPrueba.Infrastructure.Identity.csproj" />
     </ItemGroup>
 
 </Project>
