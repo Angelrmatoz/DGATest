@@ -1,0 +1,17 @@
+﻿using System.Text.Json.Serialization;
+
+namespace DGAPrueba.Core.Application.DTOS.Client.Account;
+
+public class AuthenticationResponse
+{
+    public string Id { get; set; }
+    public string UserName { get; set; }
+    public string Email { get; set; }
+    public bool IsVerified { get; set; }
+    public bool HasError { get; set; }
+    public string Error { get; set; }
+    public string? JWToken { get; set; }
+    [JsonIgnore]
+    public string? RefreshToken { get; set; }
+    public DateTime ExpiresIn { get; set; }
+}
