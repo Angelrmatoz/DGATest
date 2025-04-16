@@ -63,7 +63,9 @@ public class SaleProductController : ControllerBase
         }
         
     }
-    
+
+    #region Comment
+
     /*
     [HttpPost("Save")]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -142,4 +144,6 @@ public class SaleProductController : ControllerBase
             return StatusCode(500, $"Error interno del servidor: {e.Message}");
         }
     }*/
+
+    #endregion
 }
