@@ -11,5 +11,6 @@ public class SalesDTO
     public double Total { get; set; }
     [Required]
     public int ClientId { get; set; }
+    [Required]
     public List<SaveSaleProductDTO> Products { get; set; } = new();
 }

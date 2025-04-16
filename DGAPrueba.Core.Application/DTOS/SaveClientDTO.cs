@@ -11,5 +11,6 @@ public class SaveClientDTO
     [EmailAddress]
     public string Email { get; set; }
     [Required]
+    [Phone]
     public string Phone { get; set; }
 }

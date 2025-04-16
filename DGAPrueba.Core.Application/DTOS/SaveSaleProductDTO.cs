@@ -12,6 +12,7 @@ public class SaveSaleProductDTO
     [Required]
     public int Quantity { get; set; }
     [Required]
+    [DataType(DataType.Currency)]
     public decimal Price { get; set; }
 
 }
