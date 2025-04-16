@@ -7,7 +7,7 @@ namespace DGAPrueba.Infrastructure.Persistence.Context;
 //se encarga de la comunicacion entre la base de datos y el sistema
 public class DGAContext : DbContext
 {
-    public DGAContext(DbContextOptions options) : base(options)
+    public DGAContext(DbContextOptions<DGAContext> options) : base(options)
     {
     }
     
