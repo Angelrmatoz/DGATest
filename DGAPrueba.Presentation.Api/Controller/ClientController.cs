@@ -1,10 +1,13 @@
 ﻿using DGAPrueba.Core.Application.DTOS.Client;
 using DGAPrueba.Core.Application.Interfaces.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DGAPrueba.Presentation.Api.Controller;
 
 [ApiController]
+[Authorize]
 [Route("api/[controller]")]
 public class ClientController : ControllerBase
 {

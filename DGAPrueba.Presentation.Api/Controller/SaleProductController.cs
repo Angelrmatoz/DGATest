@@ -1,10 +1,12 @@
 ﻿using DGAPrueba.Core.Application.DTOS.Client;
 using DGAPrueba.Core.Application.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DGAPrueba.Presentation.Api.Controller;
 
 [ApiController]
+[Authorize]
 [Route("api/[controller]")]
 
 public class SaleProductController : ControllerBase
@@ -25,7 +27,7 @@ public class SaleProductController : ControllerBase
     {
         try
         {
-            var result = await _saleProductServices.GetAllAsync();
+            var result = await _saleProductServices.GetAllWithIncludeAsync();
             if(result == null)
             {
                 return NotFound("No encontrado");
@@ -62,6 +64,7 @@ public class SaleProductController : ControllerBase
         
     }
     
+    /*
     [HttpPost("Save")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -138,5 +141,5 @@ public class SaleProductController : ControllerBase
         {
             return StatusCode(500, $"Error interno del servidor: {e.Message}");
         }
-    }
+    }*/
 }
