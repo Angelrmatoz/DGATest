@@ -45,7 +45,7 @@ public class BaseServices<SaveDTO, Entity> : IBaseService<SaveDTO, Entity>
         // lanzar una excepcion
         if (T == null)
         {
-            throw new Exception($"No se encontro el registro con id {id}");
+            throw new Exception($"No se pudo actualizar {id}");
         }
         return _mapper.Map<Entity>(T);
     }
