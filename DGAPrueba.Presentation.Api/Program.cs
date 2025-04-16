@@ -1,5 +1,6 @@
 using DGAPrueba.Core.Application;
 using DGAPrueba.Infrastructure.Persistence;
+using DGAPrueba.Presentation.Api.Extensions;
 using sDGAPrueba.Infrastructure.Identity;
 
 using Microsoft.OpenApi.Models;
@@ -20,22 +21,18 @@ builder.Services.AddApplicationLayer();
 //Identity Layer
 builder.Services.AddIdentityInfrastructure(builder.Configuration);
 
+//services extension
+builder.Services.AddSwaggerExtension();
+
 builder.Services.AddControllers();
 
-//Swagger configuration
-builder.Services.AddSwaggerGen(op =>
-{
-    op.SwaggerDoc("v1", new OpenApiInfo
-    {
-        Version = "v1",
-        Title = "DGAPrueba API",
-        Description = "Test para la prueba de la DGA",
-        Contact = new OpenApiContact
-        {
-            Name = "Hansel Rodriguez"
-        }
-    });
-});
+
+
+// CORS configuration
+builder.Services.AddCors(options =>
+    options.AddPolicy("NewPolicy", app =>
+        app.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod())
+    );
 
 var app = builder.Build();
 
@@ -51,6 +48,12 @@ app.MapControllers();
 
 app.UseHttpsRedirection();
 
+//enable CORS
+app.UseCors("NewPolicy");
+
+// add this line to enable authentication
+app.UseAuthentication();
+app.UseAuthorization();
 app.Run();
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
