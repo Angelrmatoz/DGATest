@@ -13,4 +13,5 @@ public class AuthenticationResponse
     public string? JWToken { get; set; }
     [JsonIgnore]
     public string? RefreshToken { get; set; }
+    public DateTime ExpiresIn { get; set; }
 }
