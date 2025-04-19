@@ -1,9 +1,58 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router';
 import { useAuth } from '@/composables/useAuth';
+import { ref } from 'vue';
 
 // Usar el composable para la lógica de autenticación
 const { isAuthenticated, username, password, errorMessage, handleLogin, handleLogout } = useAuth();
+
+// Estado para controlar si mostrar el formulario de registro o el de login
+const showRegistrationForm = ref(false);
+
+// Datos para el formulario de registro
+const registrationData = ref({
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+});
+
+// Mensaje de error para el registro
+const registrationError = ref('');
+
+// Función para cambiar al formulario de registro
+const showRegister = () => {
+  showRegistrationForm.value = true;
+};
+
+// Función para volver al formulario de login
+const showLogin = () => {
+  showRegistrationForm.value = false;
+};
+
+// Función para manejar el registro
+const handleRegistration = () => {
+  // Validar que las contraseñas coincidan
+  if (registrationData.value.password !== registrationData.value.confirmPassword) {
+    registrationError.value = 'Las contraseñas no coinciden';
+    return;
+  }
+
+  // Aquí iría la lógica para registrar al usuario
+  // Por ahora, solo mostramos el formulario de login de nuevo
+  registrationError.value = '';
+  showRegistrationForm.value = false;
+
+  // Reiniciar el formulario
+  registrationData.value = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  };
+};
 </script>
 
 <template>
@@ -16,32 +65,67 @@ const { isAuthenticated, username, password, errorMessage, handleLogin, handleLo
 
       <h2 class="login-title">Sistema de Gestión</h2>
 
-      <form @submit.prevent="handleLogin" class="login-form">
+      <form v-if="!showRegistrationForm" @submit.prevent="handleLogin" class="login-form">
         <div class="form-group">
-          <label for="username">Usuario</label>
-          <input
-            id="username"
-            v-model="username"
-            type="text"
-            required
-            placeholder="Ingrese su usuario"
-          />
+          <label for="username">Correo</label>
+          <input id="username" v-model="username" type="text" required placeholder="Ingrese su correo electrónico" />
         </div>
 
         <div class="form-group">
           <label for="password">Contraseña</label>
-          <input
-            id="password"
-            v-model="password"
-            type="password"
-            required
-            placeholder="Ingrese su contraseña"
-          />
+          <input id="password" v-model="password" type="password" required placeholder="Ingrese su contraseña" />
         </div>
 
         <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
 
-        <button type="submit" class="login-button">Iniciar Sesión</button>
+        <button type="submit" class="login-button">Iniciar sesión</button>
+        <button type="button" @click="showRegister" class="login-button">Registrarse</button>
+      </form>
+
+      <form v-else @submit.prevent="handleRegistration" class="registration-form">
+        <h3 class="section-title">Información Personal</h3>
+
+        <div class="form-group">
+          <label for="firstName">Nombre</label>
+          <input id="firstName" v-model="registrationData.firstName" type="text" required
+            placeholder="Ingrese su nombre" />
+        </div>
+
+        <div class="form-group">
+          <label for="lastName">Apellido</label>
+          <input id="lastName" v-model="registrationData.lastName" type="text" required
+            placeholder="Ingrese su apellido" />
+        </div>
+
+        <h3 class="section-title">Datos de Cuenta</h3>
+
+        <div class="form-group">
+          <label for="email">Correo electrónico</label>
+          <input id="email" v-model="registrationData.email" type="email" required
+            placeholder="Ingrese su correo electrónico" />
+        </div>
+
+        <div class="form-group">
+          <label for="regPassword">Contraseña</label>
+          <input id="regPassword" v-model="registrationData.password" type="password" required
+            placeholder="Ingrese su contraseña" />
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword">Confirmar Contraseña</label>
+          <input id="confirmPassword" v-model="registrationData.confirmPassword" type="password" required
+            placeholder="Confirme su contraseña" />
+        </div>
+
+        <p v-if="registrationError" class="error-message">{{ registrationError }}</p>
+
+        <div class="form-actions">
+          <button type="submit" class="registration-button">Registrarse</button>
+        </div>
+
+        <div class="registration-links">
+          <p>¿Ya tienes una cuenta? <a href="#" @click.prevent="showLogin">Iniciar sesión</a></p>
+        </div>
       </form>
     </div>
   </div>
@@ -80,7 +164,5 @@ const { isAuthenticated, username, password, errorMessage, handleLogin, handleLo
 </template>
 
 <style lang="scss">
-@use '@/styles/app';
-@use '@/styles/views/login';
-@use '@/styles/components/buttons';
+@use '@/styles/main.scss';
 </style>

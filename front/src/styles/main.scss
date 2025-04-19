@@ -1,6 +1,8 @@
 @use 'variables' as *;
 @use 'mixins' as *;
 @use 'components/buttons';
+@use 'views/login';
+@use 'views/registration'; // Añadimos esta línea para importar los estilos de registro
 
 // Reset básico para asegurar que no haya márgenes o padding por defecto
 * {

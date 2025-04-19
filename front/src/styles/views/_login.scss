@@ -15,7 +15,7 @@
 
   &-card {
     background-color: white;
-    padding: $spacing-lg;
+    padding: $spacing-xl;
     border-radius: $border-radius;
     box-shadow: $box-shadow;
     width: 100%;
@@ -27,6 +27,7 @@
     color: $primary-color;
     margin-bottom: $spacing-lg;
     font-size: 2.4rem;
+    font-weight: 600;
   }
 
   &-form {
@@ -37,11 +38,14 @@
     .form-group {
       display: flex;
       flex-direction: column;
-      gap: $spacing-xs;
+      margin-bottom: $spacing-md;
 
       label {
         font-weight: 500;
         color: $dark-color;
+        font-size: $font-size-base;
+        margin-bottom: $spacing-sm;
+        display: block;
       }
 
       input {
@@ -49,10 +53,13 @@
         border: $border-width solid $border-color;
         border-radius: $border-radius;
         font-size: $font-size-base;
+        height: 4rem;
+        width: 100%;
 
         &:focus {
           outline: none;
           border-color: $primary-color;
+          box-shadow: 0 0 0 3px rgba($primary-color, 0.2);
         }
       }
     }
@@ -61,8 +68,10 @@
       color: $danger-color;
       font-size: $font-size-sm;
       text-align: center;
-      margin-top: $spacing-xs;
-      font-weight: bold;
+      margin-top: $spacing-sm;
+      padding: $spacing-xs;
+      background-color: rgba($danger-color, 0.1);
+      border-radius: $border-radius;
     }
   }
 
@@ -75,27 +84,42 @@
     font-size: $font-size-base;
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: $spacing-sm;
+    transition: background-color 0.3s ease;
+    margin-top: $spacing-md;
+    width: 100%;
 
     &:hover {
       background-color: color.adjust($primary-color, $lightness: -10%);
-      transform: translateY(-2px);
     }
 
-    &:active {
-      transform: translateY(0);
+    & + & {
+      margin-top: $spacing-md;
     }
   }
 
   &-logo {
     display: flex;
     justify-content: center;
-    margin-bottom: $spacing-md;
+    margin-bottom: $spacing-lg;
 
     img {
       width: 6rem;
       height: auto;
+    }
+  }
+
+  &-links {
+    text-align: center;
+    margin-top: $spacing-lg;
+
+    a {
+      color: $primary-color;
+      text-decoration: none;
+      font-weight: 500;
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 }
