@@ -1,0 +1,17 @@
+# Directorios a ignorar
+node_modules/
+dist/
+coverage/
+
+# Archivos generados
+*.vue.js
+*.vue.d.ts
+*.vue.js.map
+
+# Archivos de construcción
+.tmp/
+out/
+build/
+
+# Cache
+.eslintcache 

@@ -1,0 +1,85 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+@use 'components/buttons';
+
+// Reset básico para asegurar que no haya márgenes o padding por defecto
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+// Establecer 1rem = 10px (62.5% de 16px)
+html {
+  font-size: 62.5%; // Esto hace que 1rem = 10px
+  box-sizing: border-box;
+  width: 100%;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  font-size: 1.6rem; // Esto establece el tamaño base del texto a 16px
+  font-family: $font-family-base;
+  line-height: $line-height-base;
+  color: $dark-color;
+  background-color: $light-color;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+// Clases de utilidad
+.container {
+  width: 100%;
+  max-width: 120rem; // 1200px
+  margin: 0 auto;
+  padding: 0 $spacing-md;
+
+  @include respond-to(sm) {
+    padding: 0 $spacing-lg;
+  }
+
+  @include respond-to(md) {
+    padding: 0 $spacing-xl;
+  }
+}
+
+// Utilidades de texto
+.text {
+  &-center {
+    text-align: center;
+  }
+
+  &-left {
+    text-align: left;
+  }
+
+  &-right {
+    text-align: right;
+  }
+}
+
+// Utilidades de diseño
+.card {
+  @include card;
+}
+
+// Utilidades de flex
+.flex {
+  display: flex;
+
+  &-column {
+    flex-direction: column;
+  }
+
+  &-center {
+    justify-content: center;
+    align-items: center;
+  }
+}

@@ -1,0 +1,88 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+@use 'sass:color';
+
+// Estilos base para todos los botones
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-sm $spacing-md;
+  font-size: 1.6rem;
+  font-weight: 500;
+  border-radius: $border-radius;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  min-width: 10rem;
+  height: 4rem;
+
+  &:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  // Botón principal - Verde estilo Vue
+  &--primary {
+    background-color: #42b883; // Color verde de Vue
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    &:hover {
+      background-color: color.adjust(#42b883, $lightness: -5%);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  // Botón secundario
+  &--secondary {
+    background-color: #34495e; // Azul oscuro
+    color: white;
+  }
+
+  // Botón cancelar - Negro con texto blanco
+  &--cancel,
+  &[type='button'] {
+    background-color: #000000;
+    color: white;
+  }
+
+  // Botón de peligro/eliminar
+  &--danger {
+    background-color: $danger-color;
+    color: white;
+  }
+
+  // Grupo de botones (ahora anidado dentro de .btn)
+  &-group {
+    display: flex;
+    gap: $spacing-sm;
+  }
+}
+
+// Botón de cerrar sesión
+.logout-button {
+  background-color: $danger-color;
+  color: white;
+  padding: $spacing-sm $spacing-md;
+  border: none;
+  border-radius: $border-radius;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: color.adjust($danger-color, $lightness: -10%);
+  }
+}

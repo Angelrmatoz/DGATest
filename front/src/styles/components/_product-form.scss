@@ -1,0 +1,69 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.product-form {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: $spacing-lg;
+  @include card;
+
+  h2 {
+    margin-bottom: $spacing-md;
+    color: $primary-color;
+  }
+
+  .form-group {
+    margin-bottom: $spacing-md;
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: $spacing-xs;
+      width: 100%; // Asegura que el label no se extienda más allá del contenedor
+      max-width: 100%; // Limita el ancho máximo al contenedor padre
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: $spacing-sm;
+      border: 0.1rem solid $border-color;
+      border-radius: $border-radius;
+      font-size: 1.6rem;
+
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+      }
+    }
+
+    textarea {
+      resize: none; // Desactiva el control de redimensionamiento del textarea
+    }
+
+    .error {
+      color: $danger-color;
+      font-size: 1.4rem;
+      margin-top: $spacing-xs;
+    }
+  }
+
+  .form-row {
+    display: flex;
+    gap: $spacing-md;
+
+    .form-group {
+      flex: 1;
+    }
+
+    @media (max-width: $breakpoint-sm) {
+      flex-direction: column;
+    }
+  }
+
+  .form-actions {
+    @include flex(row, flex-end, center);
+    gap: $spacing-md;
+    margin-top: $spacing-lg;
+  }
+}

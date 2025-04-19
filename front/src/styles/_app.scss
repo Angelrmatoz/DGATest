@@ -1,0 +1,130 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+
+  &-header {
+    display: block;
+    width: 100%;
+    background-color: white;
+    box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.1);
+    padding: $spacing-md 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    left: 0;
+    right: 0;
+    margin: 0;
+
+    .container {
+      // Por defecto, en móviles: columna con todo centrado
+      @include flex(column, center, center);
+      gap: $spacing-md;
+
+      // En tablets y escritorio: fila con elementos separados
+      @include respond-to(sm) {
+        @include flex(row, space-between, center);
+        flex-wrap: wrap;
+      }
+    }
+
+    .logo-container {
+      // En móviles: centrado horizontalmente
+      @include flex(row, center, center);
+      width: 100%;
+
+      // En tablets y escritorio: alineado a la izquierda
+      @include respond-to(sm) {
+        @include flex(row, flex-start, center);
+        width: auto;
+        gap: $spacing-md;
+      }
+    }
+
+    .app-title {
+      font-size: 1.8rem;
+      color: $primary-color;
+      margin: 0;
+      font-weight: 600;
+
+      @include respond-to(sm) {
+        font-size: 2rem;
+      }
+
+      @include respond-to(md) {
+        font-size: 2.2rem;
+      }
+    }
+
+    .logo {
+      height: 4rem;
+      width: auto;
+    }
+
+    @include respond-to(md) {
+      padding: $spacing-md 0;
+    }
+  }
+
+  &-content {
+    flex-grow: 1;
+    padding: $spacing-lg 0;
+  }
+
+  &-footer {
+    margin-top: auto;
+    padding: $spacing-md 0;
+    background-color: $light-color;
+    border-top: 0.1rem solid $border-color;
+    text-align: center;
+    color: $secondary-color;
+    font-size: 1.4rem;
+  }
+
+  // Navegación principal (ahora anidada dentro de .app)
+  .main-nav {
+    // Por defecto en dispositivos pequeños: columna vertical
+    @include flex(column, center, center);
+    gap: $spacing-sm;
+    width: 100%;
+    margin-top: $spacing-sm;
+
+    // En dispositivos medianos y grandes: fila horizontal
+    @include respond-to(sm) {
+      @include flex(row, flex-end, center);
+      gap: $spacing-md;
+      width: auto;
+      margin-top: 0;
+    }
+
+    .nav-link {
+      padding: $spacing-sm $spacing-md;
+      color: $dark-color;
+      text-decoration: none;
+      font-weight: 500;
+      border-radius: $border-radius;
+      transition: all 0.2s ease;
+
+      // En móviles, cada enlace ocupa todo el ancho
+      width: 100%;
+      text-align: center;
+
+      @include respond-to(sm) {
+        width: auto;
+      }
+
+      &:hover {
+        background-color: rgba($primary-color, 0.1);
+      }
+
+      &.router-link-active {
+        color: $primary-color;
+        background-color: rgba($primary-color, 0.1);
+      }
+    }
+  }
+}

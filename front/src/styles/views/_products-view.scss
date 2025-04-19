@@ -1,0 +1,41 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.products-view {
+  padding: $spacing-lg 0;
+
+  h1 {
+    margin-bottom: $spacing-lg;
+    color: $primary-color;
+    font-size: 2.8rem;
+    text-align: center;
+
+    @include respond-to(sm) {
+      text-align: left;
+    }
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @include respond-to(sm) {
+      align-items: stretch;
+    }
+  }
+
+  .product {
+    &-list {
+      width: 100%;
+    }
+
+    &-card {
+      transition: transform 0.2s ease-in-out;
+
+      &:hover {
+        transform: translateY(-3px);
+      }
+    }
+  }
+}

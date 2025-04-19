@@ -1,0 +1,99 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.about {
+  max-width: 120rem;
+  margin: 0 auto;
+  padding: $spacing-lg;
+
+  h1 {
+    text-align: center;
+    color: $primary-color;
+    margin-bottom: $spacing-xl;
+    font-size: 3.2rem;
+  }
+
+  // Contenedor principal con diseño de dos columnas
+  .about-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $spacing-lg;
+
+    @include respond-to(md) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  // Estilo para cada sección
+  .about-section {
+    background-color: white;
+    border-radius: $border-radius;
+    padding: $spacing-lg;
+    box-shadow: 0 0.2rem 1rem rgba(0, 0, 0, 0.05);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    h2 {
+      color: $primary-color;
+      margin-bottom: $spacing-md;
+      padding-bottom: $spacing-sm;
+      border-bottom: 0.1rem solid $border-color;
+      font-size: 2.4rem;
+    }
+
+    p {
+      margin-bottom: $spacing-md;
+      line-height: 1.6;
+      flex-grow: 1;
+    }
+
+    // Estilo para listas
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+      margin-left: 0;
+
+      li {
+        margin-bottom: $spacing-sm;
+        position: relative;
+        padding-left: $spacing-md;
+
+        &::before {
+          content: '•';
+          color: $primary-color;
+          position: absolute;
+          left: 0;
+        }
+      }
+    }
+
+    // Estilo para el botón de contacto
+    .contact-button {
+      margin-top: auto;
+      text-align: center;
+
+      .btn {
+        min-width: 15rem;
+      }
+    }
+  }
+
+  // Media queries para pantallas más pequeñas
+  @media (max-width: $breakpoint-sm) {
+    padding: $spacing-md;
+
+    h1 {
+      font-size: 2.8rem;
+      margin-bottom: $spacing-lg;
+    }
+
+    .about-section {
+      padding: $spacing-md;
+
+      h2 {
+        font-size: 2.2rem;
+      }
+    }
+  }
+}

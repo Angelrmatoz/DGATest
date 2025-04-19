@@ -1,0 +1,101 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+@use 'sass:color';
+
+.login {
+  &-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: $light-color;
+    padding: $spacing-md;
+    width: 100%;
+  }
+
+  &-card {
+    background-color: white;
+    padding: $spacing-lg;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+    width: 100%;
+    max-width: 40rem;
+  }
+
+  &-title {
+    text-align: center;
+    color: $primary-color;
+    margin-bottom: $spacing-lg;
+    font-size: 2.4rem;
+  }
+
+  &-form {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-xs;
+
+      label {
+        font-weight: 500;
+        color: $dark-color;
+      }
+
+      input {
+        padding: $spacing-sm;
+        border: $border-width solid $border-color;
+        border-radius: $border-radius;
+        font-size: $font-size-base;
+
+        &:focus {
+          outline: none;
+          border-color: $primary-color;
+        }
+      }
+    }
+
+    .error-message {
+      color: $danger-color;
+      font-size: $font-size-sm;
+      text-align: center;
+      margin-top: $spacing-xs;
+      font-weight: bold;
+    }
+  }
+
+  &-button {
+    background-color: $primary-color;
+    color: white;
+    padding: $spacing-md;
+    border: none;
+    border-radius: $border-radius;
+    font-size: $font-size-base;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: $spacing-sm;
+
+    &:hover {
+      background-color: color.adjust($primary-color, $lightness: -10%);
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  &-logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: $spacing-md;
+
+    img {
+      width: 6rem;
+      height: auto;
+    }
+  }
+}
