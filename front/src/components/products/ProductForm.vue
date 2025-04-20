@@ -7,13 +7,7 @@
       <!-- Campo de nombre del producto -->
       <div class="form-group">
         <label for="name">Nombre</label>
-        <input
-          id="name"
-          v-model="form.name"
-          type="text"
-          required
-          placeholder="Nombre del producto"
-        />
+        <input id="name" v-model="form.name" type="text" required placeholder="Nombre del producto" />
         <!-- Mensaje de error para el nombre -->
         <div v-if="errors.name" class="error">{{ errors.name }}</div>
       </div>
@@ -21,12 +15,8 @@
       <!-- Campo de descripción del producto -->
       <div class="form-group">
         <label for="description">Descripción</label>
-        <textarea
-          id="description"
-          v-model="form.description"
-          rows="4"
-          placeholder="Descripción del producto"
-        ></textarea>
+        <textarea id="description" v-model="form.description" rows="4"
+          placeholder="Descripción del producto"></textarea>
         <!-- Mensaje de error para la descripción -->
         <div v-if="errors.description" class="error">{{ errors.description }}</div>
       </div>
@@ -36,15 +26,7 @@
         <!-- Campo de precio -->
         <div class="form-group">
           <label for="price">Precio</label>
-          <input
-            id="price"
-            v-model.number="form.price"
-            type="number"
-            step="0.01"
-            min="0"
-            required
-            placeholder="0.00"
-          />
+          <input id="price" v-model.number="form.price" type="number" step="0.01" min="0" required placeholder="0.00" />
           <!-- Mensaje de error para el precio -->
           <div v-if="errors.price" class="error">{{ errors.price }}</div>
         </div>
@@ -52,14 +34,7 @@
         <!-- Campo de stock -->
         <div class="form-group">
           <label for="stock">Stock</label>
-          <input
-            id="stock"
-            v-model.number="form.stock"
-            type="number"
-            min="0"
-            required
-            placeholder="0"
-          />
+          <input id="stock" v-model.number="form.stock" type="number" min="0" required placeholder="0" />
           <!-- Mensaje de error para el stock -->
           <div v-if="errors.stock" class="error">{{ errors.stock }}</div>
         </div>
@@ -98,7 +73,7 @@ const props = defineProps<{
 const emit = defineEmits<{
   (
     e: 'submit',
-    formData: { name: string; description: string; price: number; stock: number }
+    formData: { id?: number; name: string; description: string; price: number; stock: number }
   ): void;
   (e: 'cancel'): void;
 }>();
@@ -165,8 +140,11 @@ function validate() {
     isValid = false;
   }
 
-  // Validación de la descripción (opcional pero con longitud máxima)
-  if (form.description.length > 500) {
+  // Validación de la descripción (mínimo 7 y máximo 500 caracteres)
+  if (form.description.length < 7) {
+    errors.description = 'La descripción debe tener al menos 7 caracteres';
+    isValid = false;
+  } else if (form.description.length > 500) {
     errors.description = 'La descripción no puede exceder los 500 caracteres';
     isValid = false;
   }
@@ -194,6 +172,7 @@ function handleSubmit() {
   if (validate()) {
     // Si la validación es exitosa, emitimos el evento con los datos
     emit('submit', {
+      id: props.product?.id, // agrega el id si existe (para edición)
       name: form.name,
       description: form.description,
       price: form.price,

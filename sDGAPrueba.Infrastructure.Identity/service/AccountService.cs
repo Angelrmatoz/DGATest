@@ -56,16 +56,12 @@ public class AccountService : IAccountService
         response.Email = user.Email;
         response.UserName = user.UserName;
 
-        
         //obtener el token jwt
         JwtSecurityToken token = await GenerateJwtToken(user);
 
-
-        return new AuthenticationResponse
-        {
-            JWToken = new JwtSecurityTokenHandler().WriteToken(token),
-            ExpiresIn = DateTime.UtcNow.AddMinutes(Convert.ToDouble(_config["JWTSettings:DurationInMinutes"]))
-        };
+        response.JWToken = new JwtSecurityTokenHandler().WriteToken(token);
+        response.ExpiresIn = DateTime.UtcNow.AddMinutes(Convert.ToDouble(_config["JWTSettings:DurationInMinutes"]));
+        return response;
     }
     
     // Metodo de registro

@@ -78,8 +78,13 @@ export const useProductStore = defineStore('products', () => {
     error.value = null;
 
     try {
-      console.log(`Updating product with ID ${product.id}:`, product);
-      const updatedProduct = await ProductService.update(product.id.toString(), product);
+      console.log('Objeto enviado a ProductService.update:', product);
+      const updatedProduct = await ProductService.update(product.id, {
+        name: product.name,
+        description: product.description,
+        price: product.price,
+        stock: product.stock,
+      });
       const index = products.value.findIndex(p => p.id === product.id);
 
       if (index !== -1) {

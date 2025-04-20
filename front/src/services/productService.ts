@@ -1,3 +1,6 @@
+// Este archivo ya no debe usarse. Todas las llamadas a productos deben hacerse desde src/api/productService.ts
+// Puedes eliminar este archivo si ya no es utilizado en ningún componente o store.
+
 import apiClient from '../api/axios';
 import { Product } from '../types/Product';
 

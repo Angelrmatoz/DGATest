@@ -1,10 +1,7 @@
 import apiClient from './axios';
 import { Product } from '../types/Product';
-
-// Importamos el tipo CreateProductDTO desde el archivo de tipos
 import { CreateProductDTO } from '../types/Product';
 
-// Tipo para actualizar productos
 export type UpdateProductDTO = Partial<CreateProductDTO> & { id: number };
 
 /**
@@ -17,7 +14,7 @@ export const ProductService = {
    * @returns Promise con un array de productos
    */
   getAll: async (): Promise<Product[]> => {
-    const response = await apiClient.get('/products');
+    const response = await apiClient.get('/Product/GetAll');
     return response.data;
   },
 
@@ -26,8 +23,8 @@ export const ProductService = {
    * @param id - ID del producto
    * @returns Promise con el producto
    */
-  getById: async (id: string): Promise<Product> => {
-    const response = await apiClient.get(`/products/${id}`);
+  getById: async (id: string | number): Promise<Product> => {
+    const response = await apiClient.get(`/Product/GetById`, { params: { id } });
     return response.data;
   },
 
@@ -37,7 +34,12 @@ export const ProductService = {
    * @returns Promise con el producto creado
    */
   create: async (product: CreateProductDTO): Promise<Product> => {
-    const response = await apiClient.post('/products', product);
+    const response = await apiClient.post('/Product/Save', {
+      Name: product.name,
+      Description: product.description,
+      Price: product.price,
+      Stock: product.stock,
+    });
     return response.data;
   },
 
@@ -47,8 +49,14 @@ export const ProductService = {
    * @param product - Datos del producto a actualizar
    * @returns Promise con el producto actualizado
    */
-  update: async (id: string, product: Partial<CreateProductDTO>): Promise<Product> => {
-    const response = await apiClient.put(`/products/${id}`, product);
+  update: async (id: string | number, product: Partial<CreateProductDTO>): Promise<Product> => {
+    const response = await apiClient.put('/Product/Update', {
+      Id: Number(id),
+      Name: product.name,
+      Description: product.description,
+      Price: product.price,
+      Stock: product.stock,
+    });
     return response.data;
   },
 
@@ -57,7 +65,7 @@ export const ProductService = {
    * @param id - ID del producto a eliminar
    * @returns Promise con el resultado de la operación
    */
-  delete: async (id: string): Promise<void> => {
-    await apiClient.delete(`/products/${id}`);
+  delete: async (id: string | number): Promise<void> => {
+    await apiClient.delete('/Product/Delete', { params: { id } });
   },
 };

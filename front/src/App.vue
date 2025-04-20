@@ -2,18 +2,23 @@
 import { RouterLink, RouterView } from 'vue-router';
 import { useAuth } from '@/composables/useAuth';
 import { ref } from 'vue';
+import apiClient from '@/api/axios';
 
 // Usar el composable para la lógica de autenticación
-const { isAuthenticated, username, password, errorMessage, handleLogin, handleLogout } = useAuth();
+
+const { isAuthenticated, email, password, errorMessage, handleLogin, handleLogout } = useAuth();
 
 // Estado para controlar si mostrar el formulario de registro o el de login
+
 const showRegistrationForm = ref(false);
 
 // Datos para el formulario de registro
+
 const registrationData = ref({
   firstName: '',
   lastName: '',
   email: '',
+  phoneNumber: '',
   password: '',
   confirmPassword: '',
 });
@@ -32,26 +37,49 @@ const showLogin = () => {
 };
 
 // Función para manejar el registro
-const handleRegistration = () => {
+const handleRegistration = async () => {
+
   // Validar que las contraseñas coincidan
+
   if (registrationData.value.password !== registrationData.value.confirmPassword) {
     registrationError.value = 'Las contraseñas no coinciden';
     return;
   }
 
-  // Aquí iría la lógica para registrar al usuario
-  // Por ahora, solo mostramos el formulario de login de nuevo
-  registrationError.value = '';
-  showRegistrationForm.value = false;
+  try {
 
-  // Reiniciar el formulario
-  registrationData.value = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-  };
+    // Llamada real al endpoint de registro
+
+    await apiClient.post('/Account/Register', {
+      name: registrationData.value.firstName,
+      lastName: registrationData.value.lastName,
+      email: registrationData.value.email,
+      userName: registrationData.value.email, // UserName igual al email
+      phoneNumber: String(registrationData.value.phoneNumber), // Enviar como string
+      password: registrationData.value.password,
+    });
+    registrationError.value = '';
+    showRegistrationForm.value = false;
+
+    // Reiniciar el formulario
+    registrationData.value = {
+      firstName: '',
+      lastName: '',
+      email: '',
+      phoneNumber: '',
+      password: '',
+      confirmPassword: '',
+    };
+    alert('¡Registro exitoso! Ahora puedes iniciar sesión.');
+  } catch (error: any) {
+    // Mostrar todos los errores de validación del backend
+    if (error.response?.data?.errors) {
+      const errors = error.response.data.errors;
+      registrationError.value = Object.values(errors).flat().join(' | ');
+    } else {
+      registrationError.value = error.response?.data?.error || 'Error al registrar usuario';
+    }
+  }
 };
 </script>
 
@@ -67,8 +95,8 @@ const handleRegistration = () => {
 
       <form v-if="!showRegistrationForm" @submit.prevent="handleLogin" class="login-form">
         <div class="form-group">
-          <label for="username">Correo</label>
-          <input id="username" v-model="username" type="text" required placeholder="Ingrese su correo electrónico" />
+          <label for="email">Correo</label>
+          <input id="email" v-model="email" type="text" required placeholder="Ingrese su correo electrónico" />
         </div>
 
         <div class="form-group">
@@ -103,6 +131,11 @@ const handleRegistration = () => {
           <label for="email">Correo electrónico</label>
           <input id="email" v-model="registrationData.email" type="email" required
             placeholder="Ingrese su correo electrónico" />
+        </div>
+        <div class="form-group">
+          <label for="phoneNumber">Número telefónico</label>
+          <input id="phoneNumber" v-model="registrationData.phoneNumber" type="number" required
+            placeholder="Ingrese su número telefónico" />
         </div>
 
         <div class="form-group">
