@@ -4,6 +4,7 @@
     <div class="product-list__header">
       <h2>Lista de Productos</h2>
       <button class="btn btn--primary" @click="$emit('new-product')">Nuevo Producto</button>
+      <button class="btn btn--secondary" @click="$emit('new-product')">Venta Producto</button>
     </div>
 
     <!-- Estados de carga y errores -->
