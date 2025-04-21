@@ -64,9 +64,6 @@ public class SaleProductController : ControllerBase
         
     }
 
-    #region Comment
-
-    /*
     [HttpPost("Save")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -94,7 +91,10 @@ public class SaleProductController : ControllerBase
             return StatusCode(500, $"Error interno del servidor: {e.Message}");
         }
     }
-    
+
+    #region Comment
+
+    /*
     // PUT
     [HttpPut("Update")]
     [ProducesResponseType(StatusCodes.Status200OK)]

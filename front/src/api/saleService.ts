@@ -1,18 +1,29 @@
 import apiClient from './axios';
 
 export interface RegisterSaleProductDTO {
-  salesId: number; // id de la venta (puede ser generado por el backend)
   productId: number;
   quantity: number;
   price: number;
 }
 
+export interface SaleProduct {
+  productId: number;
+  quantity: number;
+  price: number;
+}
+
+export interface RegisterSaleDTO {
+  date: string; // formato YYYY-MM-DD
+  total: number;
+  clientId: number;
+  products: SaleProduct[];
+}
+
 export const saleService = {
   /**
-   * Registra una venta de producto en la base de datos
+   * Registra una venta en la base de datos
    */
-  async registerSaleProduct(data: Omit<RegisterSaleProductDTO, 'salesId'>): Promise<void> {
-    // El backend puede generar el SalesId automáticamente o puedes pasarlo si ya tienes una venta creada
-    await apiClient.post('/SaleProduct/Register', data);
+  async registerSale(data: RegisterSaleDTO): Promise<void> {
+    await apiClient.post('/Sale/Save', data);
   },
 };

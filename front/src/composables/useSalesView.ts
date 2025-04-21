@@ -22,10 +22,26 @@ async function sell(product: Product, quantity: number) {
     return;
   }
   try {
-    await saleService.registerSaleProduct({
-      productId: product.id,
-      quantity,
-      price: product.price,
+    // Obtener el clientId del usuario autenticado desde localStorage
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      errors.value[product.id] = 'No se encontró el usuario autenticado.';
+      return;
+    }
+    const today = new Date();
+    const date = today.toISOString().split('T')[0];
+    const total = product.price * quantity;
+    await saleService.registerSale({
+      date,
+      total,
+      clientId: Number(userId),
+      products: [
+        {
+          productId: product.id,
+          quantity,
+          price: product.price,
+        },
+      ],
     });
     productStore.products = productStore.products
       .map(p => (p.id === product.id ? { ...p, stock: p.stock - quantity } : p))

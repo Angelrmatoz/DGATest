@@ -4,7 +4,7 @@ import apiClient from '@/api/axios';
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     token: localStorage.getItem('token') || '',
-    user: null as null | { email: string },
+    user: null as null | { email: string; id: string },
     loading: false,
     error: '',
   }),
@@ -19,12 +19,14 @@ export const useAuthStore = defineStore('auth', {
         });
         // El token viene en response.data.jwToken
         const token = response.data.jwToken;
-        if (token) {
+        const id = response.data.id;
+        if (token && id) {
           this.token = token;
           localStorage.setItem('token', token);
-          this.user = { email };
+          this.user = { email, id };
+          localStorage.setItem('userId', id);
         } else {
-          this.error = 'No se recibió token.';
+          this.error = 'No se recibió token o id.';
         }
       } catch (err: any) {
         this.error = err.response?.data?.error || 'Error al iniciar sesión';
@@ -36,6 +38,7 @@ export const useAuthStore = defineStore('auth', {
       this.token = '';
       this.user = null;
       localStorage.removeItem('token');
+      localStorage.removeItem('userId');
     },
   },
 });
