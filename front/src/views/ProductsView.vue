@@ -3,35 +3,24 @@
     <div class="container">
       <h1>Gestión de Productos</h1>
 
-      <!-- 
+      <!--
         Vista condicional:
         - Muestra la lista de productos cuando no estamos en modo formulario
         - Pasa los productos del store como prop
         - Escucha eventos para editar, crear y eliminar productos
       -->
-      <ProductList
-        v-if="!showForm"
-        :products="productStore.products"
-        :isLoading="productStore.isLoading"
-        :error="productStore.error"
-        @edit-product="editProduct"
-        @new-product="createProduct"
-        @delete-product="deleteProduct"
-      />
+      <ProductList v-if="!showForm" :products="productStore.products" :isLoading="productStore.isLoading"
+        :error="productStore.error" @edit-product="editProduct" @new-product="createProduct"
+        @delete-product="deleteProduct" @open-sale-modal="$emit('open-sale-modal')" />
 
-      <!-- 
-        Muestra el formulario de producto cuando showForm es true 
+      <!--
+        Muestra el formulario de producto cuando showForm es true
         - Para edición: pasa el producto seleccionado
         - Para creación: pasa null
         - Gestiona el estado de carga y los eventos de envío y cancelación
       -->
-      <ProductForm
-        v-else
-        :product="selectedProduct"
-        :isSubmitting="productStore.isLoading"
-        @submit="submitProduct"
-        @cancel="cancelForm"
-      />
+      <ProductForm v-else :product="selectedProduct" :isSubmitting="productStore.isLoading" @submit="submitProduct"
+        @cancel="cancelForm" />
     </div>
   </div>
 </template>

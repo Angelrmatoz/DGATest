@@ -4,7 +4,7 @@
     <div class="product-list__header">
       <h2>Lista de Productos</h2>
       <button class="btn btn--primary" @click="$emit('new-product')">Nuevo Producto</button>
-      <button class="btn btn--secondary" @click="$emit('new-product')">Venta Producto</button>
+      <RouterLink to="/sales" class="btn btn--secondary">Venta Producto</RouterLink>
     </div>
 
     <!-- Estados de carga y errores -->
@@ -40,12 +40,14 @@
 
 <script setup lang="ts">
 import type { Product } from '../../types/Product';
+import { RouterLink } from 'vue-router';
 
 // Definimos los eventos que puede emitir este componente
 const emit = defineEmits<{
   (e: 'edit-product', id: number): void; // Evento para editar un producto
   (e: 'new-product'): void; // Evento para crear un nuevo producto
   (e: 'delete-product', id: number): void; // Evento para eliminar un producto
+  (e: 'open-sale-modal'): void; // Evento para abrir el modal de venta
 }>();
 
 // Definimos las propiedades que recibe el componente
@@ -60,6 +62,7 @@ defineProps<{
  * Muestra un diálogo de confirmación antes de emitir el evento
  * @param id - El ID del producto a eliminar
  */
+
 function confirmDelete(id: number) {
   if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
     // Emitimos el evento para que el componente padre maneje la eliminación

@@ -20,12 +20,31 @@ const router = createRouter({
       name: 'products',
       component: ProductsView,
     },
+    {
+      path: '/sales',
+      name: 'sales',
+      component: () => import('../views/SalesView.vue'),
+    },
     // Ruta comodín, redirige a inicio
     {
       path: '/:pathMatch(.*)*',
       redirect: '/',
     },
   ],
+});
+
+// Protección de rutas: solo permite acceso si está autenticado
+router.beforeEach((to, from, next) => {
+  // Rutas públicas (puedes agregar más si tienes otras vistas públicas)
+  const publicPages = ['/']; // Solo la raíz es pública (login)
+  const authRequired = !publicPages.includes(to.path);
+  const token = localStorage.getItem('token');
+
+  if (authRequired && !token) {
+    // Si la ruta requiere auth y no hay token, redirige al login
+    return next('/');
+  }
+  next();
 });
 
 export default router;

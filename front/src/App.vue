@@ -3,6 +3,9 @@ import { RouterLink, RouterView } from 'vue-router';
 import { useAuth } from '@/composables/useAuth';
 import { ref } from 'vue';
 import apiClient from '@/api/axios';
+import SaleForm from '@/components/sales/SaleForm.vue';
+import { useProductStore } from '@/stores/productStore';
+import { storeToRefs } from 'pinia';
 
 // Usar el composable para la lógica de autenticación
 
@@ -81,6 +84,22 @@ const handleRegistration = async () => {
     }
   }
 };
+
+const showSaleModal = ref(false);
+const productStore = useProductStore();
+const { products } = storeToRefs(productStore);
+
+function handleSaleSuccess(productId: number, quantity: number) {
+  // Actualiza el stock localmente
+  const product = products.value.find(p => p.id === productId);
+  if (product) {
+    product.stock -= quantity;
+    if (product.stock <= 0) {
+      // Elimina el producto de la lista si el stock es 0
+      productStore.products = productStore.products.filter(p => p.id !== productId);
+    }
+  }
+}
 </script>
 
 <template>
@@ -184,7 +203,9 @@ const handleRegistration = async () => {
 
     <main class="app-content">
       <div class="container">
-        <RouterView />
+        <RouterView @open-sale-modal="showSaleModal = true" />
+        <SaleForm :visible="showSaleModal" :products="products" @close="showSaleModal = false"
+          @sale-success="handleSaleSuccess" />
       </div>
     </main>
 
