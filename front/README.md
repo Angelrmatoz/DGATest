@@ -209,3 +209,58 @@ Para preguntas, reportes de bugs o sugerencias, por favor abrir un issue en el r
 ## Licencia
 
 Este proyecto está bajo la Licencia MIT. Consulta el archivo `LICENSE` para más detalles.
+
+# Frontend: Sistema de Gestión de Aduanas
+
+Este frontend es la interfaz visual del sistema de gestión de productos, ventas y clientes. Permite a cualquier usuario, sin conocimientos técnicos, gestionar inventario, clientes y ventas de forma sencilla.
+
+## ¿Qué puedes hacer con este sistema?
+
+- Registrar y autenticar usuarios
+- Crear, editar y eliminar productos
+- Registrar clientes y asociar ventas
+- Realizar ventas y controlar el stock
+- Visualizar el historial de ventas y productos
+
+## Requisitos
+
+- Node.js 18.x o superior
+- npm (o yarn)
+- Backend corriendo (ver instrucciones en el README principal)
+
+## Instalación y uso rápido
+
+1. Abre una terminal en la carpeta `front`.
+2. Instala las dependencias:
+   ```bash
+   npm install
+   ```
+3. Inicia el servidor de desarrollo:
+   ```bash
+   npm run dev
+   ```
+4. Abre tu navegador en [http://localhost:5173](http://localhost:5173)
+
+## Estructura del frontend
+
+```
+src/
+├── api/           # Servicios para conectarse al backend
+├── components/    # Componentes visuales reutilizables
+├── composables/   # Lógica reutilizable (hooks)
+├── router/        # Navegación de la app
+├── stores/        # Estado global (Pinia)
+├── styles/        # Estilos SCSS
+├── types/         # Definiciones de tipos
+├── views/         # Páginas principales
+```
+
+## Consejos para usuarios nuevos
+
+- Regístrate antes de intentar iniciar sesión.
+- Crea productos y clientes antes de registrar ventas.
+- Si tienes dudas, revisa la documentación o abre un issue.
+
+## Licencia
+
+Este frontend está bajo la [Licencia MIT](../LICENSE).
