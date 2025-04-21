@@ -23,9 +23,9 @@ async function sell(product: Product, quantity: number) {
   }
   try {
     // Obtener el clientId del usuario autenticado desde localStorage
-    const userId = localStorage.getItem('userId');
-    if (!userId) {
-      errors.value[product.id] = 'No se encontró el usuario autenticado.';
+    const clientId = localStorage.getItem('clientId');
+    if (!clientId) {
+      errors.value[product.id] = 'No se encontró el cliente autenticado.';
       return;
     }
     const today = new Date();
@@ -34,7 +34,7 @@ async function sell(product: Product, quantity: number) {
     await saleService.registerSale({
       date,
       total,
-      clientId: Number(userId),
+      clientId: Number(clientId),
       products: [
         {
           productId: product.id,

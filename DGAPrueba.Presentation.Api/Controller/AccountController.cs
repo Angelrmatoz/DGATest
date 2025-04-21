@@ -1,5 +1,6 @@
 ﻿using DGAPrueba.Core.Application.DTOS.Client.Account;
 using DGAPrueba.Core.application.Interfaces.Services;
+using DGAPrueba.Core.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DGAPrueba.Presentation.Api.Controller;
@@ -10,10 +11,12 @@ public class AccountController : ControllerBase
 {
     // Injeccion de dependencias
     private readonly IAccountService _accountService;
+    private readonly IClientService _clientService;
     
-    public AccountController(IAccountService accountService)
+    public AccountController(IAccountService accountService, IClientService clientService)
     {
         _accountService = accountService;
+        _clientService = clientService;
     }
     
     //Login
@@ -36,7 +39,20 @@ public class AccountController : ControllerBase
         {
             return NotFound(result.Error);
         }
-        return Ok(result);
+        // Buscar el cliente por email
+        var client = await _clientService.GetByEmailAsync(result.Email);
+        var response = new {
+            result.Id,
+            result.UserName,
+            result.Email,
+            result.IsVerified,
+            result.HasError,
+            result.Error,
+            result.JWToken,
+            result.ExpiresIn,
+            ClientId = client?.Id
+        };
+        return Ok(response);
     }
     
     //Register
@@ -60,7 +76,25 @@ public class AccountController : ControllerBase
         {
             return NotFound("Error al registrar");
         }
-        return Ok(result);
+        // Crear el cliente asociado
+        var client = await _clientService.GetByEmailAsync(request.Email);
+        if (client == null)
+        {
+            var newClient = new DGAPrueba.Core.Application.DTOS.Client.SaveClientDTO
+            {
+                Name = request.Name,
+                Email = request.Email,
+                Phone = request.PhoneNumber
+            };
+            await _clientService.SaveAsync(newClient);
+            client = await _clientService.GetByEmailAsync(request.Email);
+        }
+        var response = new {
+            result.HasError,
+            result.Message,
+            ClientId = client?.Id
+        };
+        return Ok(response);
     }
     
     //delte user

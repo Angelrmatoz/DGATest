@@ -16,4 +16,12 @@ public class ClientServices : BaseServices<SaveClientDTO, Client>, IClientServic
         _clientRepository = clientRepository;
         _mapper = mapper;
     }
+
+    public async Task<SaveClientDTO?> GetByEmailAsync(string email)
+    {
+        var allClients = await _clientRepository.GetAllAsync();
+        var client = allClients.FirstOrDefault(c => c.Email == email);
+        if (client == null) return null;
+        return _mapper.Map<SaveClientDTO>(client);
+    }
 }

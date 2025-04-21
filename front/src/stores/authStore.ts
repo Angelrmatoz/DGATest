@@ -20,13 +20,15 @@ export const useAuthStore = defineStore('auth', {
         // El token viene en response.data.jwToken
         const token = response.data.jwToken;
         const id = response.data.id;
-        if (token && id) {
+        const clientId = response.data.clientId || response.data.ClientId;
+        if (token && id && clientId) {
           this.token = token;
           localStorage.setItem('token', token);
           this.user = { email, id };
           localStorage.setItem('userId', id);
+          localStorage.setItem('clientId', clientId);
         } else {
-          this.error = 'No se recibió token o id.';
+          this.error = 'No se recibió token, id o clientId.';
         }
       } catch (err: any) {
         this.error = err.response?.data?.error || 'Error al iniciar sesión';
@@ -39,6 +41,7 @@ export const useAuthStore = defineStore('auth', {
       this.user = null;
       localStorage.removeItem('token');
       localStorage.removeItem('userId');
+      localStorage.removeItem('clientId');
     },
   },
 });
